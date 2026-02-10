@@ -45,6 +45,23 @@ async function getSettings(): Promise<LinguaLensSettings> {
 export default defineBackground(() => {
   console.log("[LinguaLens] Service worker started");
 
+  chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+      id: "lingua-lens-translate",
+      title: "Translate \"%s\"",
+      contexts: ["selection"],
+    });
+  });
+
+  chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === "lingua-lens-translate" && tab?.id) {
+      chrome.tabs.sendMessage(tab.id, {
+        type: MessageType.TRANSLATE_SELECTION,
+        text: info.selectionText,
+      });
+    }
+  });
+
   chrome.runtime.onMessage.addListener((message: ExtensionMessage, sender, sendResponse) => {
     if (message.type === MessageType.TRANSLATE_REQUEST) {
       // Forward to offscreen document

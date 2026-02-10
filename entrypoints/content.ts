@@ -48,16 +48,34 @@ export default defineContentScript({
 
     console.log(`[LinguaLens] Activated on ${match.siteName}`);
 
+    // Listen for context menu translation requests
+    chrome.runtime.onMessage.addListener((msg) => {
+      if (msg.type === MessageType.TRANSLATE_SELECTION) {
+        const text = (msg as any).text;
+        const selection = window.getSelection();
+        let rect: DOMRect;
+
+        if (selection && selection.rangeCount > 0) {
+          rect = selection.getRangeAt(0).getBoundingClientRect();
+        } else {
+          // Fallback: Center of screen
+          rect = new DOMRect(window.innerWidth / 2, window.innerHeight / 2, 0, 0);
+        }
+
+        triggerTranslation(text, rect);
+      }
+    });
+
     // Attach subtitle detector
     match.detector.attach((text, rect) => {
       if (!settings.enabled) return;
 
       // Debounce rapid clicks (300ms)
       if (debounceTimer) clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => handleSubtitleClick(text, rect), 300);
+      debounceTimer = setTimeout(() => triggerTranslation(text, rect), 300);
     });
 
-    async function handleSubtitleClick(text: string, rect: DOMRect) {
+    async function triggerTranslation(text: string, rect: DOMRect) {
       lastRect = rect;
       showLoading(rect);
 

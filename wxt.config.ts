@@ -7,7 +7,7 @@ export default defineConfig({
     name: "LinguaLens",
     description:
       "Learn languages by clicking subtitles on streaming sites — powered by in-browser AI",
-    permissions: ["activeTab", "offscreen", "storage"],
+    permissions: ["activeTab", "offscreen", "storage", "contextMenus"],
     content_security_policy: {
       extension_pages:
         "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self';",

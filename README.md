@@ -2,6 +2,8 @@
 
 **LinguaLens** is a local-first browser extension that uses WebGPU to run powerful AI models (like Phi-3 and Qwen2) directly in your browser. It translates subtitles on streaming sites (YouTube, Netflix, etc.) into English with rich context (definitions, pronunciation, usage notes) without sending data to any server.
 
+[GitHub Repository](https://github.com/sanjitsarkar/lingua-lens)
+
 ## 🚀 Key Features
 - **Local AI**: Runs 100% offline using `WebLLM` and WebGPU.
 - **Privacy First**: No data collection; your browsing history stays on your device.

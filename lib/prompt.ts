@@ -10,13 +10,13 @@ export function buildPrompt(
         `You are a precise dictionary/translator helper.`,
         `If the input is in ${targetLang}, define it in ${targetLang}.`,
         `Otherwise, translate the user's input to ${targetLang}.`,
-        `CRITICAL: Output MUST be in ${targetLang} ONLY. Do not use Chinese, Hindi, or other scripts.`,
+        `CRITICAL: Output MUST be in ${targetLang} ONLY.`,
         `Return a JSON object with these keys:`,
         `- translation: The ${targetLang} translation (or word itself if same language)`,
-        `- meaning: Brief definition in ${targetLang} (max 10 words)`,
+        `- meaning: Brief definition in ${targetLang}`,
         `- key_phrase: The most important word/phrase`,
         `- pronunciation: Phonetic guide`,
-        `- usage_note: Brief context in ${targetLang} (max 10 words)`,
+        `- usage_note: Brief context in ${targetLang}`,
         `Response must be valid JSON only. Be extremely concise.`,
     ].join("\n");
 
